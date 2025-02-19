@@ -1,148 +1,241 @@
-<style>
-    section {
-        display: flex;
-
-    }
-
-    h1 {
-        font-size: 40px;
-        text-align: center;
-    }
-
-    .pred>h2 {
-        text-align: center;
-        font-size: 20px;
-        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    }
-
-    .recommendation-card {
-        display: none;
-        background-color: #f4f4f4;
-        border-radius: 10px;
-        padding: 15px;
-        margin-bottom: 15px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .recommendation-card h2 {
-        color: #333;
-    }
-
-    .recommendation-card p {
-        color: #666;
-    }
-
-    div {
-        width: 50%;
-    }
-</style>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <title>Prediction</title>
+    <title>Stress Prediction</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #e0f7fa, #80deea);
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
 
+        .container {
+            text-align: center;
+            width: 80%;
+            max-width: 1200px;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+
+        .content-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .tips-section {
+            flex: 1;
+            padding: 20px;
+            border-radius: 20px;
+            background: #ffffff;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease-in;
+            text-align: left;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .recommendation-card {
+            display: none;
+            background: #f4f4f4;
+            border-left: 5px solid #3498db;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .recommendation-card h3 {
+            margin: 0;
+            color: #2c3e50;
+        }
+
+        .recommendation-card p {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .graph-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: background 0.3s ease;
+        }
+
+        .graph-section {
+            display: none;
+            position: fixed;
+            top: 10%;
+            right: 5%;
+            width: 40%;
+            height: 80%;
+            background: white;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            border-radius: 20px;
+            overflow-y: auto;
+            padding: 20px;
+            z-index: 1000;
+        }
+
+        .close-graph {
+            float: right;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: #e74c3c;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
 </head>
 
 <body>
-    <h1>Prediction</h1>
-    <hr>
-    <div class="Pred">
-        <h2>{{ prediction_text }}</h2>
+    <div class="container">
+        <h1>Stress Prediction</h1>
+
+        <div class="content-wrapper">
+            <div class="tips-section">
+                <h2>{{ prediction_text }}</h2>
+
+                <div class="recommendation-card" id="card1">
+                    <h2>Anxiety Level</h2>
+                    <p>{{ recommendation_anxiety }}</p>
+                </div>
+                <div class="recommendation-card" id="card2">
+                    <h2>Self-Esteem</h2>
+                    <p>{{ recommendation_self_esteem }}</p>
+                </div>
+                <div class="recommendation-card" id="card3">
+                    <h2>Depression</h2>
+                    <p>{{ recommendation_depression }}</p>
+                </div>
+    
+                <div class="recommendation-card" id="card4">
+                    <h2>Blood pressure</h2>
+                    <p>{{ recommendation_blood_pressure }}</p>
+                </div>
+    
+                <div class="recommendation-card" id="card5">
+                    <h2>Sleep quality</h2>
+                    <p>{{ recommendation_sleep_quality }}</p>
+                </div>
+                <div class="recommendation-card" id="card6">
+                    <h2>Safety</h2>
+                    <p>{{ recommendation_safety }}</p>
+                </div>
+    
+                <div class="recommendation-card" id="card7">
+                    <h2>Basic needs</h2>
+                    <p>{{ recommendation_basic_needs }}</p>
+                </div>
+    
+                <div class="recommendation-card" id="card8">
+                    <h2>Teacher-student_relationship</h2>
+                    <p>{{ recommendation_teacher_student_relationship }}</p>
+                </div>
+    
+                <div class="recommendation-card" id="card9">
+                    <h2>Career concerns</h2>
+                    <p>{{ recommendation_future_career_concerns }}</p>
+                </div>
+    
+                <div class="recommendation-card" id="card10">
+                    <h2>Social support</h2>
+                    <p>{{ recommendation_social_support }}</p>
+                </div>
+    
+                <div class="recommendation-card" id="card11">
+                    <h2>Extra-curricular activities</h2>
+                    <p>{{ recommendation_extracurricular_activities }}</p>
+                </div>
+    
+                <div class="recommendation-card" id="card12">
+                    <h2>Bullying</h2>
+                    <p>{{ recommendation_bullying }}</p>
+                </div>
+    
+                <div class="recommendation-card" id="card12">
+                    <h2>Bullying</h2>
+                    <p>{{ recommendation_bullying }}</p>
+                </div>
+
+                <button onclick="showNextCard()">Show Next Tip</button>
+            </div>
+        </div>
+
+        <div class="graph-icon" onclick="toggleGraph()">📊</div>
+
+        <div class="graph-section" id="graph-section">
+            <span class="close-graph" onclick="toggleGraph()">&times;</span>
+            <div id="chart-container">{{ chart_html|safe }}</div>
+        </div>
     </div>
-    <section>
-
-
-        <div class="Tips">
-            <h1>Some customized tips:</h1> <br>
-            <div class="recommendation-card" id="card1">
-                <h2>0-Anxiety Level</h2>
-                <p>{{ recommendation_anxiety }}</p>
-            </div>
-            <div class="recommendation-card" id="card2">
-                <h2>1-Self-Esteem</h2>
-                <p>{{ recommendation_self_esteem }}</p>
-            </div>
-            <div class="recommendation-card" id="card3">
-                <h2>2-Depression</h2>
-                <p>{{ recommendation_depression }}</p>
-            </div>
-
-            <div class="recommendation-card" id="card4">
-                <h2>3-Blood pressure</h2>
-                <p>{{ recommendation_blood_pressure }}</p>
-            </div>
-
-            <div class="recommendation-card" id="card5">
-                <h2>4-Sleep quality</h2>
-                <p>{{ recommendation_sleep_quality }}</p>
-            </div>
-            <div class="recommendation-card" id="card6">
-                <h2>5-Safety</h2>
-                <p>{{ recommendation_safety }}</p>
-            </div>
-
-            <div class="recommendation-card" id="card7">
-                <h2>6-Basic needs</h2>
-                <p>{{ recommendation_basic_needs }}</p>
-            </div>
-
-            <div class="recommendation-card" id="card8">
-                <h2>7-Teacher-student_relationship</h2>
-                <p>{{ recommendation_teacher_student_relationship }}</p>
-            </div>
-
-            <div class="recommendation-card" id="card9">
-                <h2>8-Career concerns</h2>
-                <p>{{ recommendation_future_career_concerns }}</p>
-            </div>
-
-            <div class="recommendation-card" id="card10">
-                <h2>9-Social support</h2>
-                <p>{{ recommendation_social_support }}</p>
-            </div>
-
-            <div class="recommendation-card" id="card11">
-                <h2>10-Extra-curricular activities</h2>
-                <p>{{ recommendation_extracurricular_activities }}</p>
-            </div>
-
-            <div class="recommendation-card" id="card12">
-                <h2>11-Bullying</h2>
-                <p>{{ recommendation_bullying }}</p>
-            </div>
-
-            <div class="recommendation-card" id="card12">
-                <h2>12-Bullying</h2>
-                <p>{{ recommendation_bullying }}</p>
-            </div>
-            <button onclick="showNextCard()">Show next tip</button>
-        </div>
-        <div class="chart">
-            {{ chart_html|safe }}
-
-        </div>
-    </section>
 
     <script>
-        var currentCard = 1;
-        var totalCards = 12;
+        let currentCard = 1;
+        const totalCards = 12;
 
         function showNextCard() {
-            var currentCardElement = document.getElementById('card' + currentCard);
-            currentCardElement.style.display = 'none';
+            document.getElementById('card' + currentCard).style.display = 'none';
 
             currentCard = (currentCard % totalCards) + 1;
 
-            var nextCardElement = document.getElementById('card' + currentCard);
-            nextCardElement.style.display = 'block';
+            document.getElementById('card' + currentCard).style.display = 'block';
         }
 
-        // Show the first card initially
         document.getElementById('card1').style.display = 'block';
+
+        function toggleGraph() {
+            const graphSection = document.getElementById('graph-section');
+            graphSection.style.display = graphSection.style.display === 'block' ? 'none' : 'block';
+        }
     </script>
 </body>
 
